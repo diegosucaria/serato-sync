@@ -5,6 +5,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+/**
+ * @author Roman Alekseenkov
+ */
 public class MusicLibrary implements Comparable<MusicLibrary> {
 
     private static final Pattern MUSIC_FILENAME_PATTERN = Pattern.compile("(.*)\\.mp3", Pattern.CASE_INSENSITIVE);
@@ -53,6 +56,9 @@ public class MusicLibrary implements Comparable<MusicLibrary> {
 
     private void collectAll(String path) {
         File[] all = new File(path).listFiles();
+        if (all == null) {
+            all = new File[] {};
+        }
 
         // process songs
         for (File file : all)

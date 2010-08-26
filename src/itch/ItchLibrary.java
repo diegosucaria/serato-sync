@@ -6,6 +6,9 @@ import itch.exception.ItchLibraryException;
 import java.io.File;
 import java.util.*;
 
+/**
+ * @author Roman Alekseenkov
+ */
 public class ItchLibrary {
 
     private Map<ItchCrate, String> crateFileName = new HashMap<ItchCrate, String>();

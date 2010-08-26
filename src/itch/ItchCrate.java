@@ -7,6 +7,9 @@ import itch.io.ItchOutputStream;
 import java.io.*;
 import java.util.*;
 
+/**
+ * @author Roman Alekseenkov
+ */
 public class ItchCrate {
 
     private static final String DEFAULT_VERSION = "81.0";
@@ -305,7 +308,7 @@ public class ItchCrate {
         try {
             writeTo(new FileOutputStream(outFile));
         } catch (FileNotFoundException e) {
-            throw new ItchLibraryException(e);
+            throw new ItchLibraryException("Error writing to file " + outFile.getName(), e);
         }
     }
 
