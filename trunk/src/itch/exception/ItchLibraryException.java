@@ -1,5 +1,8 @@
 package itch.exception;
 
+/**
+ * @author Roman Alekseenkov
+ */
 public class ItchLibraryException extends Exception {
 
     public ItchLibraryException(String message) {
