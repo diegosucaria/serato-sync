@@ -9,6 +9,7 @@ import java.util.*;
 /**
  * @author Roman Alekseenkov
  */
+@SuppressWarnings({"FieldCanBeLocal", "UnusedDeclaration"})
 public class ItchLibrary {
 
     private Map<ItchCrate, String> crateFileName = new HashMap<ItchCrate, String>();
@@ -18,19 +19,36 @@ public class ItchLibrary {
     private List<ItchCrate> subCrates = new ArrayList<ItchCrate>();
 
     public static ItchLibrary createFrom(MusicLibrary fsLibrary) {
+        // create serato library
         ItchLibrary result = new ItchLibrary();
-        result.buildLibrary(fsLibrary, 0, "");
+
+        // populate serato library it with the tracks from real library
+        //
+        // note: behavior of serato is slightly different on windows and mac os platforms
+        //       when includeSubcrateTracks is set to false, it allows serato on both platforms
+        //       to control crates behavior using "include subcrate tracks" option from the "library" menu
+        //       without forcing one way or another
+        result.buildLibrary(fsLibrary, 0, "", false);
+
         return result;
     }
 
-    private SortedSet<String> buildLibrary(MusicLibrary fsLibrary, int level, String crateName) {
+    private SortedSet<String> buildLibrary(MusicLibrary fsLibrary, int level, String crateName, boolean includeSubcrateTracks) {
+        // create the list of all tracks in this library
         SortedSet<String> all = new TreeSet<String>();
+
+        // add tracks from the current directory
         all.addAll(fsLibrary.getTracks());
 
+        // build everything for every sub-directory
         for (MusicLibrary child : fsLibrary.getChildren()) {
             String crateNameNext = !crateName.isEmpty() ? crateName + "%%" + child.getDirectory() : child.getDirectory();
-            SortedSet<String> children = buildLibrary(child, level + 1, crateNameNext);
-            all.addAll(children);
+            SortedSet<String> children = buildLibrary(child, level + 1, crateNameNext, includeSubcrateTracks);
+
+            // include subcrate tracks, but only if the option is specified
+            if (includeSubcrateTracks) {
+                all.addAll(children);
+            }
         }
 
         ItchCrate crate = new ItchCrate();

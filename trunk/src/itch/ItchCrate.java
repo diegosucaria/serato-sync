@@ -108,29 +108,7 @@ public class ItchCrate {
                 }
 
                 {
-                    // sorting
-                    in.skipExactString("osrt");
-                    int osrtValue = in.readIntegerValue();
-
-                    in.skipExactString("tvcn");
-                    int tvcnValue = in.readIntegerValue();
-
-                    String sorting = in.readStringUTF16(tvcnValue);
-                    result.setSorting(sorting);
-
-                    in.skipExactString("brev");
-                    long sortingRev = in.readLongValue(5);
-                    result.setSortingRev(sortingRev);
-
-                    // osrt/tvcn assertion
-                    if (osrtValue - tvcnValue != 17) {
-                        throw new ItchLibraryException("Expected (osrt - tvcn) == 17, but found " + (osrtValue - tvcnValue) + " (osrt = " + osrtValue + ", tvcn = " + tvcnValue + ")");
-                    }
-
-                }
-
-                {
-                    // display columns
+                    // handle different blocks
                     for (; ;) {
                         String type = in.readString(4);
                         if ("otrk".equals(type)) {
@@ -138,30 +116,51 @@ public class ItchCrate {
                             break;
                         }
 
-                        if (!"ovct".equals(type)) {
-                            throw new IllegalStateException("Expected 'ovct' to continue reading columns or 'otrk' to start reading tracks, but found '" + type + "'");
-                        }
-                        int ovctValue = in.readIntegerValue();
+                        if ("ovct".equals(type)) {
 
-                        in.skipExactString("tvcn");
-                        int tvcnValue = in.readIntegerValue();
+                            // handle 'ovct' - columns
+                            int ovctValue = in.readIntegerValue();
 
-                        String column = in.readStringUTF16(tvcnValue);
-                        result.addColumn(column);
+                            in.skipExactString("tvcn");
+                            int tvcnValue = in.readIntegerValue();
 
-                        in.skipExactString("tvcw");
-                        int tvcwValue = in.readIntegerValue();
-                        in.skipExactByte((byte) 0);
-                        in.skipExactByte((byte) '0');
+                            String column = in.readStringUTF16(tvcnValue);
+                            result.addColumn(column);
 
-                        // ovct/tvcn assertion
-                        if (ovctValue - tvcnValue != 18) {
-                            throw new ItchLibraryException("Expected (ovct - tvcn) == 18, but found " + (ovctValue - tvcnValue) + " (ovct = " + ovctValue + ", tvcn = " + tvcnValue + ")");
-                        }
+                            in.skipExactString("tvcw");
+                            int tvcwValue = in.readIntegerValue();
+                            in.skipExactByte((byte) 0);
+                            in.skipExactByte((byte) '0');
 
-                        // tvcw assertion
-                        if (tvcwValue != 2) {
-                            throw new ItchLibraryException("Expected tvcw == 2, but found " + tvcwValue);
+                            // ovct/tvcn assertion
+                            if (ovctValue - tvcnValue != 18) {
+                                throw new ItchLibraryException("Expected (ovct - tvcn) == 18, but found " + (ovctValue - tvcnValue) + " (ovct = " + ovctValue + ", tvcn = " + tvcnValue + ")");
+                            }
+
+                            // tvcw assertion
+                            if (tvcwValue != 2) {
+                                throw new ItchLibraryException("Expected tvcw == 2, but found " + tvcwValue);
+                            }
+
+                        } else if ("osrt".equals(type)) {
+
+                            // handle 'osrt' - sorting
+                            int osrtValue = in.readIntegerValue();
+
+                            in.skipExactString("tvcn");
+                            int tvcnValue = in.readIntegerValue();
+
+                            String sorting = in.readStringUTF16(tvcnValue);
+                            result.setSorting(sorting);
+
+                            in.skipExactString("brev");
+                            long sortingRev = in.readLongValue(5);
+                            result.setSortingRev(sortingRev);
+
+                            // osrt/tvcn assertion
+                            if (osrtValue - tvcnValue != 17) {
+                                throw new ItchLibraryException("Expected (osrt - tvcn) == 17, but found " + (osrtValue - tvcnValue) + " (osrt = " + osrtValue + ", tvcn = " + tvcnValue + ")");
+                            }
                         }
 
                     }
@@ -272,7 +271,9 @@ public class ItchCrate {
 
                 // read all tracks
                 {
-                    for (String track : getTracks()) {
+                    for (String trackRaw : getTracks()) {
+
+                        String track = getUniformTrackName(trackRaw);
 
                         out.writeBytes("otrk");
 
@@ -302,6 +303,21 @@ public class ItchCrate {
             }
         }
 
+    }
+
+    /**
+     * No matter whether it's windows or mac os, in the itch file there should be always forward slashes
+     * @param name Track name with absolute path
+     * @return Track name with all slashes replaced with forward slashes
+     */
+    private String getUniformTrackName(String name) {
+        // make all forward slashes on windows
+        name = name.replaceAll("\\\\", "/");
+
+        // remove drive on windows
+        name = name.replaceAll("^[a-zA-Z]\\:\\/", "");
+
+        return name;
     }
 
     public void writeTo(File outFile) throws ItchLibraryException {
