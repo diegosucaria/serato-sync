@@ -43,19 +43,25 @@ public class Tests {
 
     public static void main(String[] args) {
         try {
-            test("test/small.crate");
-            test("test/large.crate");
 
-            test("test/main%%sub1.crate");
-            test("test/main%%sub2.crate");
-            test("test/main%%sub1%%subsub1.crate");
+            // Crates from ITCH (Mac OS)
+            testRW("test/mac/small.crate");
+            testRW("test/mac/large.crate");
+
+            testRW("test/mac/main%%sub1.crate");
+            testRW("test/mac/main%%sub2.crate");
+            testRW("test/mac/main%%sub1%%subsub1.crate");
+
+            // Crates from ITCH (Windows XP)
+            testR("test/win/disk-c.crate");
+            testR("test/win/disk-z.crate");
         } catch (ItchLibraryException e) {
             System.err.println("TESTS FAILED");
             e.printStackTrace();
         }
     }
 
-    private static void test(String fileName) throws ItchLibraryException {
+    private static void testRW(String fileName) throws ItchLibraryException {
         File file = new File(fileName);
         ItchCrate crate = ItchCrate.readFrom(file);
 
@@ -71,6 +77,14 @@ public class Tests {
             System.err.println("TEST FAILED: " + fileName);
             System.err.flush();
         }
+    }
+
+    @SuppressWarnings({"UnusedDeclaration"})
+    private static void testR(String fileName) throws ItchLibraryException {
+        File file = new File(fileName);
+        ItchCrate crate = ItchCrate.readFrom(file);
+        System.out.println("TEST PASSED: " + fileName);
+        System.out.flush();
     }
 
 }

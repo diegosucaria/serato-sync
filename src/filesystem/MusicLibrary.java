@@ -10,7 +10,14 @@ import java.util.regex.Pattern;
  */
 public class MusicLibrary implements Comparable<MusicLibrary> {
 
-    private static final Pattern MUSIC_FILENAME_PATTERN = Pattern.compile("(.*)\\.mp3", Pattern.CASE_INSENSITIVE);
+    private static final Pattern[] MUSIC_FILENAME_PATTERNS = {
+            Pattern.compile("(.*)\\.mp3", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.wav", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.ogg", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.aif", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.aac", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.alac", Pattern.CASE_INSENSITIVE)
+    };
 
     private String directory;
     private SortedSet<String> tracks = new TreeSet<String>();
@@ -57,7 +64,7 @@ public class MusicLibrary implements Comparable<MusicLibrary> {
     private void collectAll(String path) {
         File[] all = new File(path).listFiles();
         if (all == null) {
-            all = new File[] {};
+            all = new File[]{};
         }
 
         // process songs
@@ -77,7 +84,11 @@ public class MusicLibrary implements Comparable<MusicLibrary> {
     }
 
     private boolean isMusic(File file) {
-        return MUSIC_FILENAME_PATTERN.matcher(file.getName().trim()).matches();
+        boolean result = false;
+        for (Pattern p : MUSIC_FILENAME_PATTERNS) {
+            result |= p.matcher(file.getName().trim()).matches();
+        }
+        return result;
     }
 
     public int compareTo(MusicLibrary that) {
