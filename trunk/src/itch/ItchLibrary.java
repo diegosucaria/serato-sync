@@ -73,13 +73,13 @@ public class ItchLibrary {
 
         // let's see if we have to delete existing crates
         if (clearLibraryBeforeSync) {
-            // clear legacy 'Crates' directory
+            // clean legacy 'Crates' directory
             FileDirectoryUtils.deleteAllFilesInDirectory(itchLibraryPath + "/Crates");
 
             // clean 'Subcrates' directory
             FileDirectoryUtils.deleteAllFilesInDirectory(itchLibraryPath + "/Subcrates");
 
-            // delete 'All' view 
+            // delete 'All' view
             FileDirectoryUtils.deleteFile(itchLibraryPath + "/database V2");
         }
 
