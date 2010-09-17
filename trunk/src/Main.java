@@ -50,7 +50,7 @@ public class Main {
         // Map music library onto serato library
         ItchLibrary itchLibrary = ItchLibrary.createFrom(fsLibrary);
         try {
-            itchLibrary.writeTo(config.getItchLibraryPath());
+            itchLibrary.writeTo(config.getItchLibraryPath(), config.isClearLibraryBeforeSync());
         } catch (ItchLibraryException e) {
             Log.error("Error occured!");
             Log.error(e);

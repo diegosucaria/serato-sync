@@ -21,7 +21,11 @@ public class Config {
     }
 
     public boolean isGuiMode() {
-        return getBooleanConfigOption(properties, "mode", "cmd");
+        return getBooleanConfigOptionUsingFalseValue(properties, "mode", "cmd");
+    }
+
+    public boolean isClearLibraryBeforeSync() {
+        return getBooleanConfigOption(properties, "music.library.itch.clear-before-sync");
     }
 
     public String getMusicLibraryPath() {
@@ -32,9 +36,13 @@ public class Config {
         return getRequiredConfigOption(properties, "music.library.itch");
     }
 
-    private static boolean getBooleanConfigOption(Properties config, String name, String falseValue) {
+    private static boolean getBooleanConfigOptionUsingFalseValue(Properties config, String name, String falseValue) {
         String result = config.getProperty(name);
         return !falseValue.equals(result);
+    }
+
+    private static boolean getBooleanConfigOption(Properties config, String name) {
+        return "true".equals(config.getProperty(name));
     }
 
     private static String getRequiredConfigOption(Properties config, String name) {

@@ -1,5 +1,6 @@
 package itch;
 
+import filesystem.FileDirectoryUtils;
 import filesystem.MusicLibrary;
 import itch.exception.ItchLibraryException;
 
@@ -68,14 +69,31 @@ public class ItchLibrary {
         return all;
     }
 
-    public void writeTo(String itchLibraryPath) throws ItchLibraryException {
+    public void writeTo(String itchLibraryPath, boolean clearLibraryBeforeSync) throws ItchLibraryException {
+
+        // let's see if we have to delete existing crates
+        if (clearLibraryBeforeSync) {
+            // clear legacy 'Crates' directory
+            FileDirectoryUtils.deleteAllFilesInDirectory(itchLibraryPath + "/Crates");
+
+            // clean 'Subcrates' directory
+            FileDirectoryUtils.deleteAllFilesInDirectory(itchLibraryPath + "/Subcrates");
+
+            // delete 'All' view 
+            FileDirectoryUtils.deleteFile(itchLibraryPath + "/database V2");
+        }
+
+        // write all parent crates
+        // they used to be in a separate directory called 'Crates', but now they are also in 'Subcrates'
         for (ItchCrate crate : crates) {
             try {
-                crate.writeTo(new File(itchLibraryPath + "/Crates/" + crateFileName.get(crate)));
+                crate.writeTo(new File(itchLibraryPath + "/Subcrates/" + crateFileName.get(crate)));
             } catch (ItchLibraryException e) {
                 throw new ItchLibraryException("Error while serializing crate '" + crateFileName.get(crate) + "'", e);
             }
         }
+
+        // write all sub-crates to the directory called 'Subcrates'
         for (ItchCrate crate : subCrates) {
             try {
                 crate.writeTo(new File(itchLibraryPath + "/Subcrates/" + crateFileName.get(crate)));

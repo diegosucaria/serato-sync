@@ -6,6 +6,9 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * @author Roman Alekseenkov
+ */
 public class Tests {
 
     public static String md5(File inFile) {
