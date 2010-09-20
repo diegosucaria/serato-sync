@@ -2,7 +2,7 @@ package config;
 
 import log.Log;
 
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -17,7 +17,10 @@ public class Config {
 
     public Config() throws IOException {
         properties = new Properties();
-        properties.load(new FileReader(CONFIG_FILE));
+
+        FileInputStream in = new FileInputStream(CONFIG_FILE);
+        properties.load(in);
+        in.close();
     }
 
     public boolean isGuiMode() {
@@ -49,7 +52,7 @@ public class Config {
         String result = config.getProperty(name);
         if (result == null || result.trim().length() <= 0) {
             Log.error("The required config option '" + name + "' is not specified");
-            System.exit(-1);
+            Log.fatalError();
         }
         return result;
     }

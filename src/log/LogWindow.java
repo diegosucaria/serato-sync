@@ -78,7 +78,7 @@ class WindowHandler {
      */
     public void fatalError() {
         JOptionPane.showMessageDialog(window,
-                "Error occured. Please inspect main window for details.",
+                "Error occured. Please inspect the main window with logs for details.",
                 "Failure", JOptionPane.ERROR_MESSAGE);
     }
 
