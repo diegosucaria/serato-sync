@@ -43,7 +43,7 @@ public class ItchLibrary {
 
         // build everything for every sub-directory
         for (MusicLibrary child : fsLibrary.getChildren()) {
-            String crateNameNext = !crateName.isEmpty() ? crateName + "%%" + child.getDirectory() : child.getDirectory();
+            String crateNameNext = crateName.length() > 0 ? crateName + "%%" + child.getDirectory() : child.getDirectory();
             SortedSet<String> children = buildLibrary(child, level + 1, crateNameNext, includeSubcrateTracks);
 
             // include subcrate tracks, but only if the option is specified

@@ -49,6 +49,7 @@ public class Log {
         if (GUI_MODE) {
             WINDOW_HANDLER.fatalError();
         }
+        System.exit(-1);
     }
 
     public static void success() {
@@ -56,6 +57,7 @@ public class Log {
         if (GUI_MODE) {
             WINDOW_HANDLER.success();
         }
+        System.exit(0);
     }
 
     private static synchronized void initGui() {

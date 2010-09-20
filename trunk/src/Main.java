@@ -20,7 +20,7 @@ public class Main {
             config = new Config();
         } catch (IOException e) {
             Log.error("Unable to load config file '" + Config.CONFIG_FILE + "'");
-            fatalError();
+            Log.fatalError();
             return;
         }
 
@@ -33,7 +33,7 @@ public class Main {
         if (fsLibrary.getTotalNumberOfTracks() <= 0) {
             Log.error("Unable to find any songs in your music library directory.");
             Log.error("Are you sure you specified the right path in the config file?");
-            fatalError();
+            Log.fatalError();
             return;
         }
         Log.info("Found " + fsLibrary.getTotalNumberOfTracks() + " tracks in " + fsLibrary.getTotalNumberOfDirectories() + " directories");
@@ -43,7 +43,7 @@ public class Main {
         if (!new File(config.getItchLibraryPath()).isDirectory()) {
             Log.error("Unable to detect your ITCH library. It doesn't exist.");
             Log.error("Are you sure you specified the right path in the config file?");
-            fatalError();
+            Log.fatalError();
             return;
         }
 
@@ -54,24 +54,14 @@ public class Main {
         } catch (ItchLibraryException e) {
             Log.error("Error occured!");
             Log.error(e);
-            fatalError();
+            Log.fatalError();
             return;
         }
         Log.info("Wrote " + itchLibrary.getTotalNumberOfCrates() + " crates and " + itchLibrary.getTotalNumberOfSubCrates() + " subcrates");
         Log.info("Enjoy!");
 
         // Report success and exit
-        success();
-    }
-
-    private static void success() {
         Log.success();
-        System.exit(0);
-    }
-
-    private static void fatalError() {
-        Log.fatalError();
-        System.exit(-1);
     }
 
 }
