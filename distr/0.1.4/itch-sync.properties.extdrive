@@ -1,0 +1,11 @@
+# mode - gui vs. cmd
+mode=gui
+
+# path to your personal music collection
+music.library.filesystem=/Volumes/Untitled/media
+
+# path to your serato library
+music.library.itch=/Volumes/Untitled/_ScratchLIVE_
+
+# deletes all existing crates from serato library prior to sync, as well as all tracks from "All" view
+music.library.itch.clear-before-sync=true
