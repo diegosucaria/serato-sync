@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="22a4e20e-d88d-4d3e-b3c1-89c81802c913" name="Default" comment="- added support for video files (.mov, .mp4, .m4a, .avi, .flv, .mpg, .mpeg, .dv, .qtz) (Fixes issue 8)&#10;- wrapped IO into buffered output streamm improving performance for external hard drives (Fixes issue 11)&#10;- removing /Volumes from the path in ItchCrate.java, it's a fix for user-reported issue where the tool doesn't work correctly with external drives (Fixes issue 7)&#10;- create Subcrates folder if it doesn't exist, so that the tool works correctly with fresh Serato ITCH or ScratchLIVE install (Fixes issue 10)&#10;&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/itch/ItchLibrary.java" afterPath="$PROJECT_DIR$/src/itch/ItchLibrary.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/itch/ItchCrate.java" afterPath="$PROJECT_DIR$/src/itch/ItchCrate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.java" afterPath="$PROJECT_DIR$/src/Main.java" />
+    <list default="true" readonly="true" id="22a4e20e-d88d-4d3e-b3c1-89c81802c913" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/distr/0.1.4/itch-sync.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/distr/0.1.4" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/distr/0.1.4/itch-sync.properties.extdrive" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/itch/io/ItchOutputStream.java" afterPath="$PROJECT_DIR$/src/itch/io/ItchOutputStream.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/filesystem/MusicLibrary.java" afterPath="$PROJECT_DIR$/src/filesystem/MediaLibrary.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/distr/0.1.4/itch-sync-0_1_4.jar" />
     </list>
     <ignored path="ItchSync.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -76,7 +74,7 @@
       <file leaf-file-name="Main.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="51" selection-start="1575" selection-end="1575" vertical-scroll-proportion="0.46745563">
+            <state line="19" column="23" selection-start="384" selection-end="384" vertical-scroll-proportion="0.21301775">
               <folding />
             </state>
           </provider>
@@ -245,7 +243,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="distr" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="0.1.4" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -259,47 +261,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="itch" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ItchSync" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ItchSync" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="filesystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ItchSync" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ItchSync" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
+              <option name="myItemId" value="distr" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -312,7 +274,7 @@
   <component name="PropertiesComponent">
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
@@ -571,7 +533,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960477" sideWeight="0.6243243" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997017" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32960477" sideWeight="0.6243243" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32960477" sideWeight="0.6608108" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3662162" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -594,7 +556,7 @@
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="added distr 0.1.3" />
+    <option name="LAST_COMMIT_MESSAGE" value="added distr 0.1.4" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -612,6 +574,8 @@
     <MESSAGE value="fixed a typo" />
     <MESSAGE value="fixed issue #5 related to compatibility with Java 1.5&#10;improved error handling" />
     <MESSAGE value="added distr 0.1.3" />
+    <MESSAGE value="- added support for video files (.mov, .mp4, .m4a, .avi, .flv, .mpg, .mpeg, .dv, .qtz) (Fixes issue 8)&#10;- wrapped IO into buffered output streamm improving performance for external hard drives (Fixes issue 11)&#10;- removing /Volumes from the path in ItchCrate.java, it's a fix for user-reported issue where the tool doesn't work correctly with external drives (Fixes issue 7)&#10;- create Subcrates folder if it doesn't exist, so that the tool works correctly with fresh Serato ITCH or ScratchLIVE install (Fixes issue 10)&#10;&#10;" />
+    <MESSAGE value="added distr 0.1.4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -714,7 +678,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="51" selection-start="1575" selection-end="1575" vertical-scroll-proportion="0.46745563">
+        <state line="19" column="23" selection-start="384" selection-end="384" vertical-scroll-proportion="0.21301775">
           <folding />
         </state>
       </provider>
