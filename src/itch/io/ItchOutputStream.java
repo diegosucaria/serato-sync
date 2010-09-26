@@ -2,6 +2,7 @@ package itch.io;
 
 import itch.exception.ItchLibraryException;
 
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -9,7 +10,7 @@ import java.io.OutputStream;
 public class ItchOutputStream extends DataOutputStream {
 
     public ItchOutputStream(OutputStream out) {
-        super(out);
+        super(new BufferedOutputStream(out));
     }
 
 

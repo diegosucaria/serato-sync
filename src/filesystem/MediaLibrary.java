@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * @author Roman Alekseenkov
  */
-public class MusicLibrary implements Comparable<MusicLibrary> {
+public class MediaLibrary implements Comparable<MediaLibrary> {
 
     private static final Pattern[] MUSIC_FILENAME_PATTERNS = {
             Pattern.compile("(.*)\\.mp3", Pattern.CASE_INSENSITIVE),
@@ -19,11 +19,23 @@ public class MusicLibrary implements Comparable<MusicLibrary> {
             Pattern.compile("(.*)\\.alac", Pattern.CASE_INSENSITIVE)
     };
 
+    private static final Pattern[] VIDEO_FILENAME_PATTERNS = {
+            Pattern.compile("(.*)\\.mov", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.mp4", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.m4a", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.avi", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.flv", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.mpg", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.mpeg", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.dv", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(.*)\\.qtz", Pattern.CASE_INSENSITIVE)
+    };
+
     private String directory;
     private SortedSet<String> tracks = new TreeSet<String>();
-    private SortedSet<MusicLibrary> children = new TreeSet<MusicLibrary>();
+    private SortedSet<MediaLibrary> children = new TreeSet<MediaLibrary>();
 
-    public MusicLibrary(String directory) {
+    public MediaLibrary(String directory) {
         this.directory = directory;
     }
 
@@ -35,13 +47,13 @@ public class MusicLibrary implements Comparable<MusicLibrary> {
         return tracks;
     }
 
-    public SortedSet<MusicLibrary> getChildren() {
+    public SortedSet<MediaLibrary> getChildren() {
         return children;
     }
 
     public int getTotalNumberOfTracks() {
         int result = tracks.size();
-        for (MusicLibrary childLibrary : children) {
+        for (MediaLibrary childLibrary : children) {
             result += childLibrary.getTotalNumberOfTracks();
         }
         return result;
@@ -49,15 +61,15 @@ public class MusicLibrary implements Comparable<MusicLibrary> {
 
     public int getTotalNumberOfDirectories() {
         int result = children.size();
-        for (MusicLibrary childLibrary : children) {
+        for (MediaLibrary childLibrary : children) {
             result += childLibrary.getTotalNumberOfDirectories();
         }
         return result;
     }
 
-    public static MusicLibrary readFrom(String musicLibraryPath) {
-        MusicLibrary result = new MusicLibrary(".");
-        result.collectAll(musicLibraryPath);
+    public static MediaLibrary readFrom(String mediaLibraryPath) {
+        MediaLibrary result = new MediaLibrary(".");
+        result.collectAll(mediaLibraryPath);
         return result;
     }
 
@@ -69,7 +81,7 @@ public class MusicLibrary implements Comparable<MusicLibrary> {
 
         // process songs
         for (File file : all)
-            if (file.isFile() && isMusic(file)) {
+            if (file.isFile() && isMedia(file)) {
                 tracks.add(file.getAbsolutePath());
             }
 
@@ -77,21 +89,24 @@ public class MusicLibrary implements Comparable<MusicLibrary> {
         for (File file : all)
             if (file.isDirectory()) {
                 String childDirectory = file.getName();
-                MusicLibrary child = new MusicLibrary(childDirectory);
+                MediaLibrary child = new MediaLibrary(childDirectory);
                 child.collectAll(path + "/" + childDirectory);
                 children.add(child);
             }
     }
 
-    private boolean isMusic(File file) {
+    private boolean isMedia(File file) {
         boolean result = false;
         for (Pattern p : MUSIC_FILENAME_PATTERNS) {
+            result |= p.matcher(file.getName().trim()).matches();
+        }
+        for (Pattern p : VIDEO_FILENAME_PATTERNS) {
             result |= p.matcher(file.getName().trim()).matches();
         }
         return result;
     }
 
-    public int compareTo(MusicLibrary that) {
+    public int compareTo(MediaLibrary that) {
         return this.directory.compareTo(that.directory);
     }
 
@@ -109,7 +124,7 @@ public class MusicLibrary implements Comparable<MusicLibrary> {
             result.append(indent(level + 1) + track);
             result.append("\n");
         }
-        for (MusicLibrary library : children) {
+        for (MediaLibrary library : children) {
             result.append(library.toString(level + 1));
         }
         return result.toString();
