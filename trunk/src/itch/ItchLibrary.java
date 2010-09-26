@@ -1,7 +1,7 @@
 package itch;
 
 import filesystem.FileDirectoryUtils;
-import filesystem.MusicLibrary;
+import filesystem.MediaLibrary;
 import itch.exception.ItchLibraryException;
 
 import java.io.File;
@@ -19,7 +19,7 @@ public class ItchLibrary {
     private List<ItchCrate> crates = new ArrayList<ItchCrate>();
     private List<ItchCrate> subCrates = new ArrayList<ItchCrate>();
 
-    public static ItchLibrary createFrom(MusicLibrary fsLibrary) {
+    public static ItchLibrary createFrom(MediaLibrary fsLibrary) {
         // create serato library
         ItchLibrary result = new ItchLibrary();
 
@@ -34,7 +34,7 @@ public class ItchLibrary {
         return result;
     }
 
-    private SortedSet<String> buildLibrary(MusicLibrary fsLibrary, int level, String crateName, boolean includeSubcrateTracks) {
+    private SortedSet<String> buildLibrary(MediaLibrary fsLibrary, int level, String crateName, boolean includeSubcrateTracks) {
         // create the list of all tracks in this library
         SortedSet<String> all = new TreeSet<String>();
 
@@ -42,7 +42,7 @@ public class ItchLibrary {
         all.addAll(fsLibrary.getTracks());
 
         // build everything for every sub-directory
-        for (MusicLibrary child : fsLibrary.getChildren()) {
+        for (MediaLibrary child : fsLibrary.getChildren()) {
             String crateNameNext = crateName.length() > 0 ? crateName + "%%" + child.getDirectory() : child.getDirectory();
             SortedSet<String> children = buildLibrary(child, level + 1, crateNameNext, includeSubcrateTracks);
 
@@ -69,6 +69,7 @@ public class ItchLibrary {
         return all;
     }
 
+    @SuppressWarnings({"ResultOfMethodCallIgnored"})
     public void writeTo(String itchLibraryPath, boolean clearLibraryBeforeSync) throws ItchLibraryException {
 
         // let's see if we have to delete existing crates
@@ -87,7 +88,9 @@ public class ItchLibrary {
         // they used to be in a separate directory called 'Crates', but now they are also in 'Subcrates'
         for (ItchCrate crate : crates) {
             try {
-                crate.writeTo(new File(itchLibraryPath + "/Subcrates/" + crateFileName.get(crate)));
+                File crateFile = new File(itchLibraryPath + "/Subcrates/" + crateFileName.get(crate));
+                crateFile.getParentFile().mkdirs();
+                crate.writeTo(crateFile);
             } catch (ItchLibraryException e) {
                 throw new ItchLibraryException("Error while serializing crate '" + crateFileName.get(crate) + "'", e);
             }
@@ -96,7 +99,9 @@ public class ItchLibrary {
         // write all sub-crates to the directory called 'Subcrates'
         for (ItchCrate crate : subCrates) {
             try {
-                crate.writeTo(new File(itchLibraryPath + "/Subcrates/" + crateFileName.get(crate)));
+                File crateFile = new File(itchLibraryPath + "/Subcrates/" + crateFileName.get(crate));
+                crateFile.getParentFile().mkdirs();
+                crate.writeTo(crateFile);
             } catch (ItchLibraryException e) {
                 throw new ItchLibraryException("Error while serializing subcrate '" + crateFileName.get(crate) + "'", e);
             }

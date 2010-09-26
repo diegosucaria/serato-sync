@@ -306,7 +306,10 @@ public class ItchCrate {
     }
 
     /**
-     * No matter whether it's windows or mac os, in the itch file there should be always forward slashes
+     * No matter whether it's windows or mac os, in the itch file there should be always:
+     * - forward slashes, no backslashes
+     * - no drive name on Windows (C:\, etc)
+     * - no drive name on Mac OS (/Volumes/VolumeName/, etc)
      * @param name Track name with absolute path
      * @return Track name with all slashes replaced with forward slashes
      */
@@ -316,6 +319,9 @@ public class ItchCrate {
 
         // remove drive on windows
         name = name.replaceAll("^[a-zA-Z]\\:\\/", "");
+
+        // remove drive on mac os
+        name = name.replaceAll("^/Volumes/[^/]+/", "");
 
         return name;
     }
