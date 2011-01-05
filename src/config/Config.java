@@ -3,6 +3,7 @@ package config;
 import log.Log;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -12,13 +13,19 @@ import java.util.Properties;
 public class Config {
 
     public static final String CONFIG_FILE = "itch-sync.properties";
+    public static final String CONFIG_FILE_NOOB_USER = "itch-sync.properties.txt";
 
     private Properties properties;
 
     public Config() throws IOException {
         properties = new Properties();
 
-        FileInputStream in = new FileInputStream(CONFIG_FILE);
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(CONFIG_FILE);
+        } catch (FileNotFoundException e) {
+            in = new FileInputStream(CONFIG_FILE_NOOB_USER);
+        }
         properties.load(in);
         in.close();
     }
